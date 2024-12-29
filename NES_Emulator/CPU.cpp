@@ -9,24 +9,36 @@ CPU::~CPU()
 {
 }
 
-uint8_t CPU::ReadReg(REGS6502 reg)
+uint8_t CPU::ReadReg(REGS reg)
 {
-	return registers_.at(reg);
+	if (reg == PC) {
+		return PC_;
+	}
+
+	return registers_[reg];
 }
 
-void CPU::WriteReg(REGS6502 reg, uint8_t data)
+void CPU::WriteReg(REGS reg, uint8_t data)
 {
+	if (reg == PC) {
+		PC_ = data;
+		return;
+	}
+
 	registers_[reg] = data;
 }
 
-uint16_t CPU::ReadPC()
+uint8_t CPU::GetFlag(FLAGS flag)
 {
-	return PC_;
+	// Using logical AND operation to get specified bit of status register.
+	return (registers_[S] & flag) > 0 ? 1 : 0;
 }
 
-void CPU::WritePC(uint16_t data)
+void CPU::SetFlag(FLAGS flag, bool value)
 {
-	PC_ = data;
+	value
+		? (registers_[S] |= flag)	// Using logical AND to set bit.
+		: (registers_[S] &= ~flag);	// Using logical AND with flag reverse to unset bit.
 }
 
 void CPU::ClearRegisters()

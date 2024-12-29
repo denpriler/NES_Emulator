@@ -27,22 +27,39 @@ private:
 public:
 	// CPU Core registers, exposed as public here for ease of access from external examinors.
 	// This is all the 6502 has.
-	enum REGS6502
+	enum REGS
 	{
 		A	= 0,		// Accumulator Register
 		X	= 1,		// X Register
 		Y	= 2,		// Y Register
 		SP	= 3,		// Stack Pointer (points to location on bus)
 		S	= 4,		// Status Register
-		// PC,				// Program Counter
+		PC,				// Program Counter
+	};
+
+public:
+	// Status register flags.
+	enum FLAGS
+	{
+		C = (1 << 0),	// Carry Bit
+		Z = (1 << 1),	// Zero
+		I = (1 << 2),	// Disable Interrupts
+		D = (1 << 3),	// Decimal Mode (unused in this implementation)
+		B = (1 << 4),	// Break
+		U = (1 << 5),	// Unused
+		V = (1 << 6),	// Overflow
+		N = (1 << 7),	// Negative
 	};
 
 private:
 	void ClearRegisters();
-	uint8_t ReadReg(REGS6502 reg);
-	void WriteReg(REGS6502 reg, uint8_t data);
-	uint16_t ReadPC();
-	void WritePC(uint16_t data);
+
+public:
+	uint8_t ReadReg(REGS reg);
+	void WriteReg(REGS reg, uint8_t data);
+	// Status flags register methods
+	uint8_t GetFlag(FLAGS flag);
+	void SetFlag(FLAGS flag, bool value);
 
 /* Registers END */
 };
