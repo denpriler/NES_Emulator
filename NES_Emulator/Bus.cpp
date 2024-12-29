@@ -14,22 +14,22 @@ Bus::~Bus()
 
 void Bus::ClearRAM()
 {
-	for (uint8_t i : ram) {
-		ram[i] = 0x000;
+	for (uint8_t &i : ram_) {
+		ram_[i] = 0x000;
 	}
 }
 
 void Bus::Write(uint16_t address, uint8_t data)
 {
 	if (address >= RAM_ADDR_START && address <= RAM_ADDR_END) {
-		ram[address] = data;
+		ram_[address] = data;
 	}
 }
 
 uint8_t Bus::Read(uint16_t address)
 {
 	if (address >= RAM_ADDR_START && address <= RAM_ADDR_END) {
-		return ram[address];
+		return ram_[address];
 	}
 
 	return 0x000;

@@ -3,6 +3,9 @@
 #include <cstdint>
 #include <array>
 
+/*
+* General BUS class.
+*/
 class Bus
 {
 public:
@@ -10,7 +13,7 @@ public:
 	~Bus();
 
 private: //Devices
-	std::array<uint8_t, 64 * 1024> ram; // Temporary RAM emulation
+	std::array<uint8_t, 64 * 1024> ram_; // Temporary RAM emulation
 
 private: // Methods
 	void ClearRAM();
