@@ -1,4 +1,5 @@
 #include "CPU.h"
+#include "Bus.h"
 
 CPU::CPU(Bus* bus): bus_(bus)
 {
@@ -8,6 +9,8 @@ CPU::CPU(Bus* bus): bus_(bus)
 CPU::~CPU()
 {
 }
+
+/* Registers START */
 
 uint8_t CPU::ReadReg(REGS reg)
 {
@@ -48,3 +51,19 @@ void CPU::ClearRegisters()
 	}
 	PC_ = 0x0000;
 }
+
+/* Registers END */
+
+/* Bus START */
+
+uint8_t CPU::ReadBus(uint16_t address)
+{
+	return bus_->Read(address);
+}
+
+void CPU::WriteBus(uint16_t address, uint8_t data)
+{
+	bus_->Write(address, data);
+}
+
+/* Bus END */

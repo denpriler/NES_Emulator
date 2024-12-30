@@ -11,9 +11,6 @@ class Bus;
 */
 class CPU
 {
-private:
-	Bus* bus_;
-
 public:
 	CPU(Bus* bus);
 	~CPU();
@@ -62,5 +59,16 @@ public:
 	void SetFlag(FLAGS flag, bool value);
 
 /* Registers END */
+
+/* Bus START */
+
+private:
+	Bus* bus_;
+
+public:
+	uint8_t ReadBus(uint16_t address);
+	void WriteBus(uint16_t address, uint8_t data);
+
+/* Bus END */
 };
 
