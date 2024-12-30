@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <array>
 
 // Forward declaration of generic communications bus class to prevent circular inclusions.
 class Bus;
@@ -17,22 +16,15 @@ public:
 
 /* Registers START */
 
-private:
-	std::array<uint8_t, 5> registers_;
-	uint16_t PC_ = 0x0000;	// Program Counter
-
 public:
 	// CPU Core registers, exposed as public here for ease of access from external examinors.
 	// This is all the 6502 has.
-	enum REGS
-	{
-		A	= 0,		// Accumulator Register
-		X	= 1,		// X Register
-		Y	= 2,		// Y Register
-		SP	= 3,		// Stack Pointer (points to location on bus)
-		S	= 4,		// Status Register
-		PC,				// Program Counter
-	};
+	uint8_t A	= 0x00;		// Accumulator Register
+	uint8_t X	= 0x00;		// X Register
+	uint8_t Y	= 0x00;		// Y Register
+	uint8_t SP	= 0x00;		// Stack Pointer (points to location on bus)
+	uint8_t S	= 0x00;		// Status Register
+	uint16_t PC = 0x00000;	// Program Counter
 
 public:
 	// Status register flags.
@@ -48,12 +40,7 @@ public:
 		N = (1 << 7),	// Negative
 	};
 
-private:
-	void ClearRegisters();
-
 public:
-	uint8_t ReadReg(REGS reg);
-	void WriteReg(REGS reg, uint8_t data);
 	// Status flags register methods
 	uint8_t GetFlag(FLAGS flag);
 	void SetFlag(FLAGS flag, bool value);
